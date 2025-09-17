@@ -2,7 +2,7 @@ class FeedEntity {
   final int id;
   final String description;
   final String thumbnail;
-  final String video; 
+  final String video;
   final int? userId;
   final String? userName;
   final String? userImage;

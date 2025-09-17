@@ -5,6 +5,7 @@ import 'package:noviindus_round_two_task/domain/entities/category_entity.dart';
 import 'package:noviindus_round_two_task/domain/use_cases/get_categories_usecase.dart';
 import 'package:noviindus_round_two_task/domain/use_cases/get_home_feed_usecase.dart';
 import 'package:noviindus_round_two_task/presentation/providers/home_provider.dart';
+import 'package:noviindus_round_two_task/presentation/screens/add_feed_screen/add_feed_screen.dart';
 import 'package:noviindus_round_two_task/presentation/screens/home_screen/widgets/feed_card_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         appBar: buildAppBar(),
         body: buildBody(),
-        floatingActionButton: buildFloatingButton(),
+        floatingActionButton: buildFloatingButton(ctx: context),
       ),
     );
   }
@@ -47,11 +48,11 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       title: Column(
-        children: <Widget>[
+        children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Text(
                 'Hello Maria',
                 style: TextStyle(color: Colors.white, fontSize: 16),
@@ -64,7 +65,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      actions: <Widget>[
+      actions: [
         Padding(
           padding: const EdgeInsets.only(right: 12.0),
           child: CircleAvatar(
@@ -98,7 +99,7 @@ class HomeScreen extends StatelessWidget {
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+          children: [
             buildCategoryList(home.categories),
             buildFeedList(home.feeds),
           ],
@@ -138,7 +139,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildFloatingButton() {
+  Widget buildFloatingButton({required BuildContext ctx}) {
     return SizedBox(
       width: 60,
       height: 60,
@@ -146,7 +147,11 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.red,
         shape: CircleBorder(),
         child: Icon(Icons.add, color: Colors.white, size: 28),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(
+            ctx,
+          ).push(MaterialPageRoute(builder: (ctx) => AddFeedScreen()));
+        },
       ),
     );
   }

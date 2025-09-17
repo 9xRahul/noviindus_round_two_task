@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../../core/constants.dart';
 
@@ -54,6 +55,62 @@ class RemoteApiService {
       }
     } catch (e) {
       throw Exception('Failed to GET $path : $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> uploadMultipart({
+    required String path,
+    required Map<String, String> fields,
+    required Map<String, String> files,
+    Map<String, String>? headers,
+  }) async {
+    final String url = '$baseUrl$path';
+    try {
+      final uri = Uri.parse(url);
+      final request = http.MultipartRequest('POST', uri);
+
+      if (headers != null) {
+        request.headers.addAll(headers);
+      }
+
+      fields.forEach((key, value) {
+        request.fields[key] = value;
+      });
+
+      for (final entry in files.entries) {
+        final String fieldName = entry.key;
+        final String filePath = entry.value;
+        final file = File(filePath);
+        if (!file.existsSync()) {
+          throw Exception('File not found: $filePath');
+        }
+        final multipartFile = await http.MultipartFile.fromPath(
+          fieldName,
+          filePath,
+        );
+        request.files.add(multipartFile);
+      }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 202) {
+        final Map<String, dynamic> decoded =
+            json.decode(response.body) as Map<String, dynamic>;
+        print(response.body);
+        return decoded;
+      } else {
+        final Map<String, dynamic> decoded = response.body.isNotEmpty
+            ? json.decode(response.body) as Map<String, dynamic>
+            : {};
+        final msg =
+            decoded['message'] ??
+            decoded['error'] ??
+            'Upload failed with status ${response.statusCode}';
+        throw Exception(msg);
+      }
+    } catch (e) {
+      throw Exception('Multipart upload failed: $e');
     }
   }
 }

@@ -119,11 +119,11 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: [
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Row(
-              children: <Widget>[
+              children: [
                 CircleAvatar(
                   radius: 18,
                   backgroundImage: avatarImage,
@@ -132,7 +132,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
+                  children: [
                     Text(
                       widget.feed.userName ?? 'Unknown',
                       style: const TextStyle(fontWeight: FontWeight.w600),
@@ -188,7 +188,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
         aspectRatio: 16 / 9,
         child: Stack(
           alignment: Alignment.center,
-          children: <Widget>[
+          children: [
             hasThumbnail == true
                 ? Positioned.fill(
                     child: Image.network(
@@ -217,7 +217,7 @@ class _FeedCardWidgetState extends State<FeedCardWidget> {
     return AspectRatio(
       aspectRatio: aspect,
       child: Stack(
-        children: <Widget>[
+        children: [
           VideoPlayer(_controller),
           if (_showControls == true)
             Positioned.fill(
