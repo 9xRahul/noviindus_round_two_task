@@ -40,4 +40,20 @@ class RemoteApiService {
       throw Exception(errorMsg);
     }
   }
+
+  Future<Map<String, dynamic>> getJson(String path) async {
+    final url = '$baseUrl$path';
+    try {
+      final res = await http.get(Uri.parse(url));
+
+      if (res.statusCode == 202) {
+        final Map<String, dynamic> body = json.decode(res.body);
+        return body;
+      } else {
+        throw Exception('Server error: ${res.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to GET $path : $e');
+    }
+  }
 }

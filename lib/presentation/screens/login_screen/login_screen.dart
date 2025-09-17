@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:noviindus_round_two_task/presentation/providers/auth_provider.dart';
+import 'package:noviindus_round_two_task/presentation/screens/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -43,6 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Login success')));
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
+      );
     } else if (provider.state == AuthState.error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login failed: ${provider.errorMessage}')),

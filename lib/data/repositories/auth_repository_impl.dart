@@ -1,5 +1,5 @@
 import 'package:noviindus_round_two_task/data/datasource/remote_api_service.dart';
-import 'package:noviindus_round_two_task/models/auth_models.dart';
+import 'package:noviindus_round_two_task/data/models/auth_models.dart';
 import '../../domain/entities/auth_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../core/storage_service.dart';
